@@ -1,0 +1,131 @@
+.userstatus-container{
+width:100%;
+max-width:100%;
+padding:30px;
+background:#f5f7fb;
+min-height:100vh;
+box-sizing:border-box;
+}
+
+.userstatus-title{
+font-size:26px;
+margin-bottom:25px;
+font-weight:600;
+}
+
+.userstatus-loading{
+text-align:center;
+padding:40px;
+font-size:18px;
+}
+
+/* STATUS CARDS */
+
+.status-cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+width:100%;
+margin-bottom:30px;
+}
+
+.status-card{
+display:flex;
+align-items:center;
+gap:15px;
+
+padding:22px;
+
+border-radius:12px;
+
+color:white;
+
+font-size:22px;
+
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+
+transition:0.3s;
+}
+
+.status-card:hover{
+transform:translateY(-5px);
+}
+
+.status-card span{
+font-size:13px;
+opacity:0.9;
+}
+
+.status-card h2{
+margin:0;
+font-size:28px;
+}
+
+/* CARD COLORS */
+
+.online{
+background:linear-gradient(135deg,#00b09b,#96c93d);
+}
+
+.call{
+background:linear-gradient(135deg,#ff7e5f,#feb47b);
+}
+
+.idle{
+background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.total{
+background:linear-gradient(135deg,#11998e,#38ef7d);
+}
+
+/* TABLE */
+
+.userstatus-table-wrapper{
+    width: 100%;
+    overflow-x: auto;
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.userstatus-table{
+width:100%;
+border-collapse:collapse;
+}
+
+.userstatus-table th,
+.userstatus-table td{
+padding:12px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+.userstatus-table th{
+background:#fafafa;
+}
+
+/* STATUS BADGES */
+
+.status-badge{
+padding:6px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:500;
+}
+
+.status-badge.online{
+background:#dcfce7;
+color:#15803d;
+}
+
+.status-badge.oncall{
+background:#fee2e2;
+color:#b91c1c;
+}
+
+.status-badge.idle{
+background:#e0e7ff;
+color:#4338ca;
+}

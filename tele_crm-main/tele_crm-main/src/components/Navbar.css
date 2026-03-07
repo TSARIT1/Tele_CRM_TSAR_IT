@@ -1,0 +1,131 @@
+/* .hm-nav {
+  
+  background: rgba(58, 114, 245, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 33;
+  border-bottom: 1px solid rgba(123, 98, 246, 0.1);
+}
+
+.hm-nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hm-nav-logo {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.hm-nav-logins {
+  display: flex;
+  gap: 1rem;
+}
+
+.hm-admin-login, .hm-user-login {
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.hm-admin-login {
+   background-color: #4a9dff; 
+  color: white;
+}
+
+.hm-admin-login:hover {
+  color: #1c3a5e;
+  /* text-decoration: underline; */
+/* }
+
+.hm-user-login {
+  /* background-color: #4CAF50; */
+/*   
+  color: white;
+}
+
+.hm-user-login:hover {
+  /* background-color: #3e8e41; */
+  /* text-decoration: underline; */
+  /* color: aqua;
+}
+
+@media (max-width: 768px) {
+  .hm-nav-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+} */ 
+
+
+
+.hm-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.hm-nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hm-nav-logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.hm-nav-logins {
+  display: flex;
+  gap: 12px;
+}
+
+.hm-admin-login,
+.hm-user-login {
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.hm-admin-login {
+  border: 1px solid #2563eb;
+  color: #2563eb;
+}
+
+.hm-admin-login:hover {
+  background: #2563eb;
+  color: white;
+  text-decoration: underline;
+}
+
+.hm-user-login {
+  background: #2563eb;
+  color: white;
+}
+
+.hm-user-login:hover {
+  background: #1e40af;
+  text-decoration: underline;
+}
