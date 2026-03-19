@@ -115,12 +115,12 @@ font-size:12px;
 font-weight:500;
 }
 
-.status-badge.online{
+.status-badge.active{
 background:#dcfce7;
 color:#15803d;
 }
 
-.status-badge.oncall{
+.status-badge.inactive{
 background:#fee2e2;
 color:#b91c1c;
 }

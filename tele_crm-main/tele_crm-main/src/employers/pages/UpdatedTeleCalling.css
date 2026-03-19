@@ -108,6 +108,35 @@
   transform: translateX(2px);
 }
 
+.tc-feedback-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tc-back-button {
+  background: #f1f1f1;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tc-stop-call-btn {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tc-stop-call-btn:hover {
+  background: #d9363e;
+}
+
 /* ===== Status Pills ===== */
 .status-pill {
   padding: 5px 12px;
@@ -268,4 +297,31 @@
   font-size: 0.85rem;
   color: gray;
   text-align: center;
+}
+
+.tc-auto-call-btn{
+  padding:8px 14px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.tc-auto-call-btn.start{
+  background:#2ecc71;
+  color:white;
+}
+
+.tc-auto-call-btn.stop{
+  background:#e74c3c;
+  color:white;
+}
+
+.tc-call-btn{
+  background:#3498db;
+  color:white;
+  border:none;
+  padding:6px 12px;
+  border-radius:5px;
+  cursor:pointer;
 }

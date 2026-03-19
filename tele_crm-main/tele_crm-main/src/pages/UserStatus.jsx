@@ -23,9 +23,8 @@ const UserStatus = () => {
     }
   };
 
-  const onlineUsers = users.filter(u => u.status === "online").length;
-  const onCallUsers = users.filter(u => u.status === "oncall").length;
-  const idleUsers = users.filter(u => u.status === "idle").length;
+  const activeUsers = users.filter(u => u.status === "Active").length;
+const inactiveUsers = users.filter(u => u.status === "Inactive").length;
 
   if (loading) {
     return <div className="userstatus-loading">Loading user status...</div>;
@@ -43,26 +42,26 @@ const UserStatus = () => {
         <div className="status-card online">
           <FiUserCheck />
           <div>
-            <span>Online Users</span>
-            <h2>{onlineUsers}</h2>
+            <span>Active Users</span>
+            <h2>{activeUsers}</h2>
           </div>
         </div>
 
         <div className="status-card call">
           <FiPhone />
           <div>
-            <span>On Call</span>
-            <h2>{onCallUsers}</h2>
+            <span>Inactive Users</span>
+            <h2>{inactiveUsers}</h2>
           </div>
         </div>
 
-        <div className="status-card idle">
+        {/* <div className="status-card idle">
           <FiClock />
           <div>
             <span>Idle</span>
             <h2>{idleUsers}</h2>
           </div>
-        </div>
+        </div> */}
 
         <div className="status-card total">
           <FiUsers />
@@ -105,8 +104,8 @@ const UserStatus = () => {
                 <td>{user.phoneNumber}</td>
 
                 <td>
-                  <span className={`status-badge ${user.status || "idle"}`}>
-                    {user.status || "Idle"}
+                  <span className={`status-badge ${(user.status || "Inactive").toLowerCase()}`}>
+                    {user.status || "Inactive"}
                   </span>
                 </td>
 

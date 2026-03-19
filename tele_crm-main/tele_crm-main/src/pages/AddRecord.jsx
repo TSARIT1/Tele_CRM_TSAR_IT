@@ -37,6 +37,29 @@ const AddRecord = () => {
     }
   };
 
+  const updateStatus = async (employeeId, newStatus) => {
+  try {
+
+    await api.put(`/user/status/${employeeId}`, {
+      status: newStatus
+    });
+
+    setRecords(prev =>
+      prev.map(emp =>
+        emp.employeeId === employeeId
+          ? { ...emp, status: newStatus }
+          : emp
+      )
+    );
+    alert("Status Updated Successfully")
+
+  } catch (error) {
+    console.error("Status update failed", error);
+    alert("Failed to update status");
+  }
+};
+  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -286,6 +309,7 @@ const AddRecord = () => {
                 <th>Phone Number</th>
                 <th>Date Joined</th>
                 <th>Date Ending</th>
+                <th>Action</th>
               </tr>
             </thead>
 
@@ -299,7 +323,16 @@ const AddRecord = () => {
                   <td>{record.email}</td>
                   <td>{record.phoneNumber}</td>
                   <td>{record.dateJoined}</td>
-                  <td>{record.dateEnding || "Active"}</td>
+                  <td>{record.dateEnding || "-"}</td>
+                  <td>
+                    <select
+                    value={record.status || "active"} 
+                    onChange={(e) => updateStatus(record.employeeId, e.target.value)}
+                    className="status-dropdown">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                      </select>
+                  </td>
                 </tr>
               ))}
 

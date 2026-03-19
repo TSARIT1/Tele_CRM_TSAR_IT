@@ -36,7 +36,7 @@ const AllUsers = () => {
   // Update status
   const handleStatusUpdate = async (employeeId) => {
     try {
-      await api.put(`/user/${employeeId}/status`, { status: statusValue });
+      await api.put(`/user/status/${employeeId}`, { status: statusValue });
 
       setData(prev =>
         prev.map(u =>
@@ -54,10 +54,16 @@ const AllUsers = () => {
 
   // Filter
   const filteredData = data.filter(item =>
-    item.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    `${item.firstName} ${item.lastName}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase()) ||
     item.employeeId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.phoneNumber?.includes(searchTerm)
   );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
 
   // Pagination
   const indexOfLastRecord = currentPage * recordsPerPage;
@@ -73,25 +79,91 @@ const AllUsers = () => {
             <FiArrowLeft /> Back
           </button>
 
-          <div className="ds-user-card">
+          {/* <div className="ds-user-card">
             <h3>User Details</h3>
 
             <p><b>Employee ID:</b> {selectedUser.employeeId}</p>
             <p><b>Name:</b> {selectedUser.firstName} {selectedUser.lastName}</p>
             <p><b>Mobile:</b> {selectedUser.phoneNumber}</p>
-            <p><b>Date Joined:</b> {new Date(selectedUser.dateJoined).toLocaleDateString()}</p>
+            <p>
+              <b>Date Joined:</b>
+              {selectedUser.dateJoined
+                ? new Date(selectedUser.dateJoined).toLocaleDateString()
+                : "-"}
+            </p>
 
-            <select value={statusValue} onChange={e => setStatusValue(e.target.value)}>
-              <option value="Pending">Pending</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-              <option value="In Progress">In Progress</option>
+            <select
+              value={statusValue}
+              onChange={e => setStatusValue(e.target.value)}
+            >
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
             </select>
 
             <button onClick={() => handleStatusUpdate(selectedUser.employeeId)}>
               <FiSave /> Update Status
             </button>
-          </div>
+          </div> */}
+          <div className="ds-user-card">
+
+  <h3>User Details</h3>
+
+  <div className="ds-user-form">
+
+    <div className="ds-form-group">
+      <label>Employee ID</label>
+      <input type="text" value={selectedUser.employeeId} readOnly />
+    </div>
+
+    <div className="ds-form-group">
+      <label>First Name</label>
+      <input type="text" value={selectedUser.firstName} readOnly />
+    </div>
+
+    <div className="ds-form-group">
+      <label>Last Name</label>
+      <input type="text" value={selectedUser.lastName} readOnly />
+    </div>
+
+    <div className="ds-form-group">
+      <label>Phone Number</label>
+      <input type="text" value={selectedUser.phoneNumber} readOnly />
+    </div>
+
+    <div className="ds-form-group">
+      <label>Date Joined</label>
+      <input
+        type="text"
+        value={
+          selectedUser.dateJoined
+            ? new Date(selectedUser.dateJoined).toLocaleDateString()
+            : "-"
+        }
+        readOnly
+      />
+    </div>
+
+    <div className="ds-form-group">
+      <label>Status</label>
+      <select
+        value={statusValue}
+        onChange={(e) => setStatusValue(e.target.value)}
+      >
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+    </div>
+
+  </div>
+
+  <button
+    className="ds-save-btn"
+    onClick={() => handleStatusUpdate(selectedUser.employeeId)}
+  >
+    <FiSave /> Update Status
+  </button>
+
+</div>
         </div>
       ) : (
         <>
@@ -121,10 +193,19 @@ const AllUsers = () => {
               </thead>
               <tbody>
                 {currentRecords.map((item, index) => (
-                  <tr key={item.employeeId}>
+                  <tr
+                    key={item.employeeId}
+                    onClick={() => {
+                      setSelectedUser(item);
+                      setStatusValue(item.status);
+                    }}
+                  >
                     <td>{indexOfFirstRecord + index + 1}</td>
-                    <td>{new Date(item.dateJoined).toLocaleDateString()}</td>
-                    <td>{item.employeeId}</td>
+                    <td>
+                      {item.dateJoined
+                        ? new Date(item.dateJoined).toLocaleDateString()
+                        : "-"}
+                    </td><td>{item.employeeId}</td>
                     <td>{item.firstName} {item.lastName}</td>
                     <td>{item.phoneNumber}</td>
                     <td>{item.status}</td>

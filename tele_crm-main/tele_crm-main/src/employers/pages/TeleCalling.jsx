@@ -21,6 +21,8 @@ const [status, setStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(15);
 
+  const [autoCalling, setAutoCalling] = useState(false);
+
 
   const [userData,setUserData] = useState([])
  
@@ -31,7 +33,7 @@ const [status, setStatus] = useState("");
         // if (!token) {
         //   navigate("/admin/login");
         // }
-        const response = await api.get("/candidates", {
+        const response = await api.get("/telecalling/candidates", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -141,7 +143,7 @@ const saveNotes = async () => {
       followUpComments: followUpComments,
     };
 
-    await api.post("/logs", payload, {
+    await api.post("/telecalling/logs", payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -161,6 +163,75 @@ const saveNotes = async () => {
     alert("Failed to save feedback ❌");
   }
 };
+
+const handleAutoCalling = async () => {
+  try {
+    const token = localStorage.getItem("userToken");
+
+    if (!autoCalling) {
+      await api.post("/call/start", {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      alert("Auto calling started");
+      setAutoCalling(true);
+    } else {
+      await api.post("/telecalling/call/stop", {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      alert("Auto calling stopped");
+      setAutoCalling(false);
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Failed to change calling state");
+  }
+};
+
+const handleCall = async (customer) => {
+  try {
+    const token = localStorage.getItem("userToken");
+
+    await api.post(
+      "/telecalling/call/single",
+      { candidateId: customer.id },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    setSelectedCustomer(customer);
+
+    alert(`Calling ${customer.name}`);
+
+  } catch (error) {
+    console.error(error);
+    alert("Call failed");
+  }
+};
+
+const handleStopCall = async () => {
+  try {
+    const token = localStorage.getItem("userToken");
+
+    await api.post(
+      "/telecalling/call/stop",
+      {},
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    alert("Call stopped");
+
+  } catch (error) {
+    console.error(error);
+    alert("Failed to stop call");
+  }
+};
+
   return (
     <div className="tc-container">
       <div className="tc-header">
@@ -185,6 +256,14 @@ const saveNotes = async () => {
             <div className="tc-total-records">
               Total: {filteredCustomers.length} records
             </div>
+            <div className="tc-call-controls">
+  <button
+    className={`tc-auto-call-btn ${autoCalling ? "stop" : "start"}`}
+    onClick={handleAutoCalling}
+  >
+    {autoCalling ? "Stop Calling" : "Start Calling"}
+  </button>
+</div>
           </div>
 
           <div className="tc-table-wrapper">
@@ -193,8 +272,9 @@ const saveNotes = async () => {
                 <tr>
                   <th>Name</th>
                   <th>Phone</th>
-                  <th>Last Contact</th>
+                  {/* <th>Last Contact</th> */}
                   <th>Status</th>
+                  <th>Call</th>
                 </tr>
               </thead>
               <tbody>
@@ -207,18 +287,30 @@ const saveNotes = async () => {
                     >
                       <td>{customer.name}</td>
                       <td>{customer.mobileNumber}</td>
-                      <td>
+                      {/* <td>
                         {customer.notes?.length > 0
                           ? new Date(
                               customer.notes[customer.notes.length - 1].contact_time
                             ).toLocaleString()
-                          : "Never contacted"}
-                      </td>
+                          : ""}
+                      </td> */}
                       <td>
-  <span className={`status-pill status-${customer.status?.toLowerCase().replace(" ", "_")}`}>
-    {customer.status}
-  </span>
-</td>
+                    <span className={`status-pill status-${customer.status?.toLowerCase().replace(" ", "_")}`}>
+                      {customer.status}
+                    </span>
+                    </td>
+
+                      <td>
+                          <button
+                             className="tc-call-btn"
+                             onClick={(e) => {
+                             e.stopPropagation();
+                             handleCall(customer);
+                            }}
+                          >
+                           Call
+                          </button>
+                      </td>      
                     </tr>
                   ))
                 ) : (
@@ -254,9 +346,15 @@ const saveNotes = async () => {
         </div>
       ) : (
         <div className="tc-detail-view">
+  <div className="tc-feedback-header">
   <button onClick={goBackToList} className="tc-back-button">
     <FaArrowLeft /> Back
   </button>
+
+  <button onClick={handleStopCall} className="tc-stop-call-btn">
+    Stop Call
+  </button>
+</div>
 
   <div className="tc-customer-header">
     <h3>{selectedCustomer.name}</h3>
@@ -342,7 +440,7 @@ const saveNotes = async () => {
     </button>
   </div>
 
-  {/* <div className="tc-history-section">
+   <div className="tc-history-section">
     <h4><MdHistory /> Contact History</h4>
     {selectedCustomer.notes?.length > 0 ? (
       <table className="tc-history-table">
@@ -364,7 +462,7 @@ const saveNotes = async () => {
     ) : (
       <p className="tc-no-history">No history yet</p>
     )}
-  </div> */}
+  </div> 
 </div>
       )}
     </div>
